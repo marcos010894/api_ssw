@@ -39,6 +39,9 @@ class CotarItem(BaseModel):
     entDificil: str
     destContribuinte: str
 
+@app.get('/')
+def respo():
+    return {"resposta": "ok"}
 @app.post("/cotar")
 def cotar(item: CotarItem):
     # Chamando a função desejada e passando os parâmetros necessários

@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Formulário de Cotação</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: rgb(240, 240, 240);
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            max-width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="row">
+            <h3>Formulario de Cotação</h3>
+        </div>
+        <div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="cnpjRemetente" placeholder="CNPJ Remetente: *" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="solicitante" placeholder="Nome Solicitante *" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="cepOrigem" placeholder="Cep Origem: *" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="datetime-local" id="data_coleta" class="form-control" placeholder="Data para coleta: *"
+                        required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">R$</span>
+                        <input type="text" class="form-control" id="valorNF" placeholder="Valor da Nota (NF-e): *"
+                            required>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text" id="basic-addon1">KG</span>
+                        <input type="text" class="form-control" id="peso" placeholder="Peso Total em KG *" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    Altura 1
+                </div>
+            </div>
+
+
+            <div class="row" style="border-bottom: 1px solid blue; margin-top: 23px;">
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="comprimento"
+                        placeholder="Comprimento : * 0.60 Centimetros" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="largura" placeholder="Largura : * 0.60 Centimetros"
+                        required>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="altura" placeholder="altura: * 0.60 Centimetros"
+                        required>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="quantidade" placeholder="Quantidade Volume *" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    Altura 2
+                </div>
+            </div>
+            <div class="row" style="border-bottom: 1px solid blue; margin-top: 23px;">
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="comprimento2"
+                        placeholder="Comprimento 2: * 0.60 Centimetros" required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="largura2" placeholder="Largura2 : * 0.60 Centimetros"
+                        required>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="altura2" placeholder="altura2: * 0.60 Centimetros"
+                        required>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="text" class="form-control" id="quantidade2" placeholder="Quantidade Volume 2 *"
+                        required>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="cnpjDestinatario" placeholder="CNPJ Destinatário *"
+                        required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <select class="form-select" id="mercadoria" required>
+                        <option value="">Escolha um tipo de mercadoria</option>
+                        <option value="001">Auto Peças</option>
+                        <option value="002">Veterinário</option>
+                        <option value="004">Diversos</option>
+                        <option value="007">Medicamento</option>
+                        <option value="019">Ração</option>
+                        <option value="016">teste</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <input type="text" class="form-control" id="cepDestino" placeholder="Cep Destino" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <input disabled type="text" class="form-control" value="67780842120887202445452643079099815359736164" id="NFeNota" placeholder="Chave da nota fiscal *" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9 mb-3">
+                    <input type="text" id="obs" class="form-control" placeholder="Observações para coleta">
+                </div>
+                <div class="col-md-4">
+                    <select class="form-select" id="ciffob">
+                        <option selected>Frete Pago:</option>
+                        <option value="C">Na Origem</option>
+                        <option value="F">No Destino</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="display: flex; align-items: center; justify-content: center;">
+                    <button data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="gerarCota()" type="submit"
+                        class="btn btn-success btn-lg btn-block">Cotar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="coletaSolicitada">Valor do frete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="sucess"
+                        style="display: none; justify-content: center; align-items: center; flex-direction: column">
+                        <div>
+                            <p id="cotacao"></p>
+                            <br>
+                            <p>O Valor para transporta sua mercadoria Fica:</p>
+                        </div>
+                        <div>
+                            <h1 id="valorFrete" style="color: rgb(47, 255, 82);"></h1>
+                        </div>
+                    </div>
+                    <div id="error"
+                        style="display: none; justify-content: center; align-items: center; flex-direction: column">
+                        <div>
+                            <p id="mensagem" style="color: red;">O Valor para transporta sua mercadoria Fica:</p>
+                        </div>
+                    </div>
+
+                    <div id="coletaSolicitada">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" id="SolicitarColeta" onclick="gerarColeta()" class="btn btn-success">Solicitar
+                        Coleta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const url = "http://127.0.0.1:8000/"
+        var token = ''
+        var cotacaovar = ''
+        const gerarCota = () => {
+            let solicitante = document.getElementById('solicitante').value
+
+            let comprimento = document.getElementById('comprimento').value
+            let largura = document.getElementById('largura').value
+            let altura = document.getElementById('altura').value
+            let volume = (comprimento * largura * altura)
+
+
+            let comprimento2 = document.getElementById('comprimento2').value
+            let largura2 = document.getElementById('largura2').value
+            let altura2 = document.getElementById('altura2').value
+            let volume2 = (comprimento2 * altura2 * altura2)
+
+            let volumeCalculado = volume * parseInt(document.getElementById('quantidade').value)
+            let volumeCalculado2 = volume2 * parseInt(document.getElementById('quantidade2').value)
+
+            let volumeSomadoNormal = volumeCalculado + volumeCalculado2
+            let volumeSomado = volumeSomadoNormal
+
+            let quantidadeSomadas = parseInt(document.getElementById('quantidade').value) + parseInt(document.getElementById('quantidade2').value)
+
+            const data = {
+                "dominio": "SEP",
+                "login": "KELDER",
+                "senha": "585080",
+                "cnpjPagador": "13648530607",
+                "cepOrigem": parseInt(document.getElementById('cepOrigem').value),
+                "cepDestino": parseInt(document.getElementById('cepDestino').value),
+                "valorNF": parseFloat(document.getElementById('valorNF').value).toFixed(2),
+                "quantidade": parseInt(quantidadeSomadas),
+                "peso": parseFloat(document.getElementById('peso').value).toFixed(2),
+                "volume": parseFloat(volumeSomado).toFixed(4),
+                "mercadoria": parseInt(document.getElementById('mercadoria').value),
+                "ciffob": document.getElementById('ciffob').value,
+                "cnpjRemetente": document.getElementById('cnpjRemetente').value,
+                "cnpjDestinatario": document.getElementById('cnpjDestinatario').value,
+                "observacao": document.getElementById('obs').value,
+                "trt": "",
+                "coletar": "sim",
+                "entDificil": "nao",
+                "destContribuinte": "nao"
+            }
+
+
+            fetch(url + 'cotar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Substitua com a URL de origem
+                },
+                body: JSON.stringify(data)  // Converte o objeto de dados em uma string JSON
+            })
+                .then(response => response.json())  // Converte a resposta em JSON
+                .then(data => {
+
+                    if (data.response.cotacao.frete == '0,00') {
+                        document.getElementById('sucess').style.display = 'none'
+                        document.getElementById('error').style.display = 'flex'
+                        document.getElementById('mensagem').innerText = `${data.response.cotacao.mensagem}`
+                        document.getElementById('SolicitarColeta').style.display = 'none'
+                        document.getElementById('coletaSolicitada').style.display = 'none'
+                    } else {
+                        document.getElementById('sucess').style.display = 'flex'
+                        document.getElementById('error').style.display = 'none'
+                        document.getElementById('valorFrete').innerText = `R$ ${data.response.cotacao.frete}`
+                        document.getElementById('cotacao').innerText = `Numero cotação: ${data.response.cotacao.cotacao}`
+                        document.getElementById('SolicitarColeta').style.display = 'block'
+                        document.getElementById('coletaSolicitada').style.display = 'none'
+
+
+                        token = data.response.cotacao.token
+                        cotacaovar = data.response.cotacao.cotacao
+                    }
+                })  // Imprime a resposta no console
+                .catch((error) => {
+                    console.error('Erro:', error);
+                });
+
+        }
+
+
+        const gerarColeta = () => {
+            let solicitante = document.getElementById('solicitante').value
+            let dateInput = document.getElementById('data_coleta').value;
+            let date = new Date(dateInput);
+
+            let isoDateTime = date.toISOString(); // '2023-05-17T00:00:00.000Z' por exemplo
+
+            const data = {
+                "dominio": "SEP",
+                "login": "KELDER",
+                "senha": "585080",
+                "cotacao": parseInt(cotacaovar),
+                "limiteColeta": isoDateTime,
+                "token": token,
+                "solicitante": document.getElementById('solicitante').value,
+                "observacao": document.getElementById('obs').value,
+                "chaveNFe": document.getElementById('NFeNota').value,
+                "nroPedido": cotacaovar
+            }
+
+            fetch(url + 'coletar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'  // Substitua com a URL de origem
+                },
+                body: JSON.stringify(data)  // Converte o objeto de dados em uma string JSON
+            })
+                .then(response => response.json())  // Converte a resposta em JSON
+                .then(data => {
+                    document.getElementById('coletaSolicitada').innerText = `Coleta Solicitada.`
+                    if (data.response.coleta.erro == 0) {
+                        document.getElementById('sucess').style.display = 'none'
+                        document.getElementById('error').style.display = 'none'
+                        document.getElementById('coletaSolicitada').innerHTML += `
+                            <h4>Meus parabéns, sua coleta foi solicitada</h4>
+                            <h4>Numero da coleta: ${data.response.coleta.coleta}</h4>
+                            <p>obs: Aqui colocaremos para baixar um comprovante</p>
+                         `;
+                        document.getElementById('SolicitarColeta').style.display = 'none'
+
+                    } else {
+                        alert(data.response.coleta.mensagem)
+                    }
+                })  // Imprime a resposta no console
+                .catch((error) => {
+                    console.error('Erro:', error);
+                });
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>

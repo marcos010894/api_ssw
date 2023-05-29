@@ -5,7 +5,7 @@ from zeep import Client
 from fastapi.middleware.cors import CORSMiddleware
 import xmltodict
 import json
-
+import pandas as pd
 app = FastAPI()
 origins = ["*"]
 app.add_middleware(
@@ -112,3 +112,44 @@ def coletar(item: ColetarItem):
     
     # Retornando a resposta
     return {"response": response_dict}
+
+
+
+    
+@app.get('/getCidades')
+def getCidades():
+    # Carrega o arquivo Excel
+    city = 'COLATINA'
+    uf = 'ES'
+    # Carrega o arquivo Excel
+    df = pd.read_excel('Cidades Vs Unidades.xlsx')
+
+    # Converte os dados em JSON
+    json_data = df.to_json(orient='records')
+   # Salvar em um arquivo JSON
+    with open('datacities.json', 'w') as file: #Sempre quando converter um excel para json lembrar e salvar em um arquivo.json para dar certo...
+        file.write(json_data)
+    # Abrir o arquivo JSON
+    with open('datacities.json', 'r') as file:
+        json_data1 = json.load(file)
+        for doc in json_data1:
+           if doc['CIDADE'] == city and doc['UF'] == uf:
+                return doc
+    
+    return {'erro', 'nenhum dado encontrado...'}
+        
+        
+@app.get('/tde_verify')
+def getTde():
+    # Carrega o arquivo Excel
+
+    # Carrega o arquivo Excel
+    df = pd.read_excel('tde.xlsx')
+
+    # Converte os dados em JSON
+    json_data = df.to_json(orient='records')
+   # Salvar em um arquivo JSON
+    with open('tde.json', 'w') as file:
+        file.write(json_data)
+   
+    return json_data

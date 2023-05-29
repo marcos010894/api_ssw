@@ -116,11 +116,8 @@ def coletar(item: ColetarItem):
 
 
     
-@app.get('/getCidades')
-def getCidades():
-    # Carrega o arquivo Excel
-    city = 'COLATINA'
-    uf = 'ES'
+@app.get('/getCidades/{uf}/{city}')
+def getCidades(city:str, uf: str):
     # Carrega o arquivo Excel
     df = pd.read_excel('Cidades Vs Unidades.xlsx')
 
@@ -139,8 +136,8 @@ def getCidades():
     return {'erro', 'nenhum dado encontrado...'}
         
         
-@app.get('/tde_verify')
-def getTde():
+@app.get('/tde_verify/{cpf}')
+def getTde(cpf:int):
     # Carrega o arquivo Excel
 
     # Carrega o arquivo Excel
@@ -152,4 +149,11 @@ def getTde():
     with open('tde.json', 'w') as file:
         file.write(json_data)
    
-    return json_data
+    # Abrir o arquivo JSON
+    with open('tde.json', 'r') as file:
+        json_data1 = json.load(file)
+        for doc in json_data1:
+           if doc['CNPJ/CPF'] == cpf:
+                return {'entrega_dificil':'s'}
+    
+        return {'entrega_dificil':'n'}

@@ -159,7 +159,8 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <input type="text" class="form-control" id="cnpjDestinatario"
-                                placeholder="CNPJ Destinatário *" required>
+                                placeholder="CNPJ Destinatário *" onchange="entregadificil()" required>
+                            <p id="entregadif" style="color: red; display: none;">Entrega dificil Para Destinatario</p>
                         </div>
                         <div class="col-md-6 mb-3">
                             <select class="form-select" id="mercadoria" required>
@@ -487,7 +488,7 @@
         var token = ''
         var cotacaovar = ''
         var quantidadeTotal = 0
-
+        var entregadificilLet = 'n'
         var volumeCounter = 1;
         var volumeCounterInner = 1;
         var alterationtrue = false
@@ -529,7 +530,7 @@
                     "observacao": document.getElementById('obs').value,
                     "trt": "",
                     "coletar": "sim",
-                    "entDificil": "s",
+                    "entDificil": entregadificilLet,
                     "destContribuinte": "nao"
                 }
 
@@ -676,6 +677,16 @@
             volumeCounterInner++;
         }
 
+        async function entregadificil() {
+            let cnpj = document.getElementById('cnpjDestinatario').value
+            const data = await (await (fetch(`${url}tde_verify/${cnpj}`))).json()
+            if (data.entrega_dificil == 's') {
+                document.getElementById('entregadif').style.display = 'block'
+            } else {
+                document.getElementById('entregadif').style.display = 'none'
+            }
+            entregadificilLet = data.entrega_dificil
+        }
         function validarCamposEtapa1() {
             const cnpjRemetente = document.getElementById("cnpjRemetente").value;
             const cnpjPagador = document.getElementById("cnpjPagador").value;

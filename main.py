@@ -164,31 +164,3 @@ def getTde(cpf:int):
                 return {'entrega_dificil':'s'}
     
         return {'entrega_dificil':'n'}
-
-class PDF(BaseModel):
-    item: str
-@app.post('/downloadpdf')
-def downloadPdf(html: PDF):
-    url = 'https://api.html-pdf.com/v1/pdf'
-    headers = {
-        'Content-Type': 'application/json',
-    }
-
-    # Corpo da solicitação com o conteúdo HTML
-    data = {
-        'html': '<h1>Meu HTML</h1><p>Conteúdo do PDF</p>',
-    }
-    
-    # Envio da solicitação POST para a API
-    response = requests.post(url, headers=headers, json=data)
-
-    # Verificação do código de status da resposta
-    if response.status_code == 200:
-        # Salva o arquivo PDF
-        with open('arquivo.pdf', 'wb') as file:
-            file.write(response.content)
-        print('PDF gerado com sucesso!')
-    else:
-        print('Erro ao gerar o PDF:', response.text)
-    
-    return response

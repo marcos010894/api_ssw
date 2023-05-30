@@ -6,6 +6,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import xmltodict
 import json
 import pandas as pd
+import requests
+
 app = FastAPI()
 origins = ["*"]
 app.add_middleware(
@@ -127,13 +129,18 @@ def getCidades(city:str, uf: str):
     with open('datacities.json', 'w') as file: #Sempre quando converter um excel para json lembrar e salvar em um arquivo.json para dar certo...
         file.write(json_data)
     # Abrir o arquivo JSON
+    docSave = {}
+    returned = False
     with open('datacities.json', 'r') as file:
         json_data1 = json.load(file)
         for doc in json_data1:
            if doc['CIDADE'] == city and doc['UF'] == uf:
-                return doc
-    
-    return {'erro', 'nenhum dado encontrado...'}
+                docSave = doc
+                returned = True
+    if returned:
+        return docSave
+    else:
+        return {'erro': 'nenhum dado encontrado...'}
         
         
 @app.get('/tde_verify/{cpf}')
@@ -157,3 +164,31 @@ def getTde(cpf:int):
                 return {'entrega_dificil':'s'}
     
         return {'entrega_dificil':'n'}
+
+class PDF(BaseModel):
+    item: str
+@app.post('/downloadpdf')
+def downloadPdf(html: PDF):
+    url = 'https://api.html-pdf.com/v1/pdf'
+    headers = {
+        'Content-Type': 'application/json',
+    }
+
+    # Corpo da solicitação com o conteúdo HTML
+    data = {
+        'html': '<h1>Meu HTML</h1><p>Conteúdo do PDF</p>',
+    }
+    
+    # Envio da solicitação POST para a API
+    response = requests.post(url, headers=headers, json=data)
+
+    # Verificação do código de status da resposta
+    if response.status_code == 200:
+        # Salva o arquivo PDF
+        with open('arquivo.pdf', 'wb') as file:
+            file.write(response.content)
+        print('PDF gerado com sucesso!')
+    else:
+        print('Erro ao gerar o PDF:', response.text)
+    
+    return response

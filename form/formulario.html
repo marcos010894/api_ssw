@@ -343,6 +343,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                    <button type="button" style="display: none;" onclick="gerarEtiqueta()" id="btnEtiqueta"
+                        class="btn btn-primary">Imprimir Etiquetas</button>
                     <button type="button" id="SolicitarColeta" onclick="gerarColeta()" class="btn btn-success">Solicitar
                         Coleta</button>
                 </div>
@@ -356,6 +359,10 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
     <script>
+        var unidade = ''
+        var cidadeD
+        var ufD
+
         async function verifycep() {
             let cep = document.getElementById('cepOrigem').value
             // Monta a URL da requisição
@@ -363,7 +370,6 @@
 
             // Cria um objeto XMLHttpRequest
             var xhr = new XMLHttpRequest();
-
             // Configura a função de callback quando a resposta for recebida
             xhr.onload = function () {
                 if (xhr.status === 200) {
@@ -410,9 +416,12 @@
                     if (resposta.hasOwnProperty('localidade')) {
                         var cidade = resposta.localidade;
                         var uf = resposta.uf;
-                        console.log('Cidade: ' + cidade);
+                        cidadeD = resposta.localidade;
+                        ufD = resposta.uf;
                         document.getElementById('cidadeDestinatario').innerText = cidade
                         document.getElementById('ufDestinatario').innerText = uf
+                        verifyUnidade(cidade, uf)
+
                     } else {
                         console.log('CEP não encontrado.');
                     }
@@ -474,9 +483,10 @@
 
             }
         }
-        const url = "https://ssweapi.herokuapp.com/"
+        const url = "http://127.0.0.1:8000/"
         var token = ''
         var cotacaovar = ''
+        var quantidadeTotal = 0
 
         var volumeCounter = 1;
         var volumeCounterInner = 1;
@@ -500,6 +510,7 @@
 
                     quantidadeSomadas = parseInt(document.getElementById(`quantidade${volumecalc}`).value) + quantidadeSomadas
                 }
+                quantidadeTotal = quantidadeSomadas
                 const data = {
                     "dominio": "SEP",
                     "login": "site",
@@ -604,6 +615,7 @@
                             <p>obs: Aqui colocaremos para baixar um comprovante</p>
                          `;
                         document.getElementById('SolicitarColeta').style.display = 'none'
+                        document.getElementById('btnEtiqueta').style.display = 'block'
 
                     } else {
                         alert(data.response.coleta.mensagem)
@@ -614,7 +626,15 @@
                 });
         }
 
+        function gerarEtiqueta() {
+            let cepOrigem = parseInt(document.getElementById('cepDestino').value)
+            let cnpjDestinatario = document.getElementById('cnpjDestinatario').value
+            // URL que deseja abrir em uma nova guia
+            var url = "impressao.html?quantidade=" + quantidadeTotal + "&unidade=" + unidade + '&cnpj=' + cnpjDestinatario + '&cep=' + cepOrigem + '&cidade=' + cidadeD + '&uf=' + ufD;
 
+            // Abre o link em uma nova guia
+            window.open(url, "_blank");
+        }
 
         function adicionarVolume() {
             // Encontre o elemento onde os volumes devem ser adicionados
@@ -729,6 +749,13 @@
             }
 
             return true;
+        }
+
+        const verifyUnidade = async (cityDestinaraio, ufDestinaraio) => {
+            let cidade = cityDestinaraio.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+            let dados = await (await (fetch(`${url}getCidades/${ufDestinaraio.toUpperCase()}/${cidade.toUpperCase()}`))).json()
+            unidade = dados.UNIDADE
+            return
         }
     </script>
 </body>

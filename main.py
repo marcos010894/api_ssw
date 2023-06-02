@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 from pydantic import BaseModel
 from datetime import datetime
 from zeep import Client
@@ -7,6 +7,10 @@ import xmltodict
 import json
 import pandas as pd
 import requests
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 app = FastAPI()
 origins = ["*"]
@@ -145,18 +149,13 @@ def getCidades(city:str, uf: str):
         
 @app.get('/tde_verify/{cpf}')
 def getTde(cpf:int):
-    # Carrega o arquivo Excel
-
-    # Carrega o arquivo Excel
+   
     df = pd.read_excel('tde.xlsx')
 
-    # Converte os dados em JSON
     json_data = df.to_json(orient='records')
-   # Salvar em um arquivo JSON
     with open('tde.json', 'w') as file:
         file.write(json_data)
    
-    # Abrir o arquivo JSON
     with open('tde.json', 'r') as file:
         json_data1 = json.load(file)
         for doc in json_data1:
@@ -164,3 +163,47 @@ def getTde(cpf:int):
                 return {'entrega_dificil':'s'}
     
         return {'entrega_dificil':'n'}
+    
+
+
+class HtmlString(BaseModel):
+    html: str
+    assunto: str
+    
+@app.post('/setEmail')
+def setEmail(html: HtmlString):
+    
+    html_content = html.html
+    # Definindo as credenciais e o servidor SMTP
+    smtp_server = "smtp.gmail.com"
+    port = 587  # para uso com o servidor do gmail
+    username = "dev@salexpress.com.br"
+    password = "Mito010894@@"
+
+    # Criando a mensagem
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = html.assunto
+    msg['From'] = username
+    msg['To'] = "email_destino@gmail.com"
+
+    # Criando a parte HTML da mensagem
+    html = html_content
+
+    # Adicionando a parte HTML à mensagem
+    part2 = MIMEText(html, 'html')
+    msg.attach(part2)
+
+    # Conectando ao servidor SMTP e enviando o e-mail
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.ehlo()  # saudação opcional, chamada para alguns servidores
+        server.starttls()  # segurança
+        server.login(username, password)
+        server.sendmail(username, "kelder.nagel@salexpress.com.br", msg.as_string())
+        server.close()
+
+        print('Email enviado!')
+        return {'status': 200, 'mensagem': 'Email enviado!'}
+    except Exception as e:
+        print('Algo deu errado...', e)
+        return e

@@ -146,7 +146,10 @@ def getCidades(city:str, uf: str):
     else:
         return {'erro': 'nenhum dado encontrado...'}
         
-        
+
+
+    
+         
 @app.get('/tde_verify/{cpf}')
 def getTde(cpf:int):
    
@@ -169,10 +172,32 @@ def getTde(cpf:int):
 class HtmlString(BaseModel):
     html: str
     assunto: str
+    emailSet: str
     
+
+@app.get('/unidadeX/{unidade}')
+def getEmail(unidade: str):
+    df = pd.read_excel('Bases-gerentes-cidades.xlsx')
+    if unidade == 'VGE':
+        unidade = 'VGA'
+
+    json_data = df.to_json(orient='records')
+    with open('bases_email.json', 'w') as file:
+        file.write(json_data)
+   
+    with open('bases_email.json', 'r') as file:
+        json_data1 = json.load(file)
+        for doc in json_data1:
+           if doc['UNIDADE'] == unidade:
+               return doc
+    
+        return {'entrega_dificil':'n'}
+    
+
 @app.post('/setEmail')
 def setEmail(html: HtmlString):
     
+    setEmail = html.emailSet
     html_content = html.html
     # Definindo as credenciais e o servidor SMTP
     smtp_server = "smtp.gmail.com"
@@ -184,7 +209,7 @@ def setEmail(html: HtmlString):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = html.assunto
     msg['From'] = username
-    msg['To'] = "email_destino@gmail.com"
+    msg['To'] = setEmail
 
     # Criando a parte HTML da mensagem
     html = html_content
@@ -199,10 +224,10 @@ def setEmail(html: HtmlString):
         server.ehlo()  # saudação opcional, chamada para alguns servidores
         server.starttls()  # segurança
         server.login(username, password)
-        server.sendmail(username, "kelder.nagel@salexpress.com.br", msg.as_string())
+        server.sendmail(username, setEmail, msg.as_string())
         server.close()
 
-        print('Email enviado!')
+        print('Email enviado! para', setEmail)
         return {'status': 200, 'mensagem': 'Email enviado!'}
     except Exception as e:
         print('Algo deu errado...', e)

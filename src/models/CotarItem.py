@@ -1,0 +1,21 @@
+from pydantic import BaseModel
+class CotarItem(BaseModel):
+    dominio: str
+    login: str
+    senha: str
+    cnpjPagador: str
+    cepOrigem: int
+    cepDestino: int
+    valorNF: float
+    quantidade: int
+    peso: float
+    volume: float
+    mercadoria: int
+    ciffob: str
+    cnpjRemetente: str
+    cnpjDestinatario: str
+    observacao: str
+    trt: str
+    coletar: str
+    entDificil: str
+    destContribuinte: str

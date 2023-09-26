@@ -6,14 +6,18 @@ from email.mime.base import MIMEBase
 from email import encoders
 import asyncio
 from typing import List
-
+import os
+from dotenv import load_dotenv
 app = FastAPI()
 
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-SMTP_USER = "dev@salexpress.com.br"
-SMTP_PASSWORD = "Mito010894@@"
+# Carregue as variáveis de ambiente do arquivo .env
+load_dotenv()
 
+
+SMTP_SERVER = os.getenv("SMTP_SERVER")
+SMTP_PORT = os.getenv("SMTP_PORT")
+SMTP_USER = os.getenv("SMTP_USER")
+SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
 router = APIRouter(prefix="/setEmail", tags=["setEmail"])
 
 # Crie uma única conexão SMTP persistente

@@ -12,7 +12,7 @@ app = FastAPI()
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 SMTP_USER = "dev@salexpress.com.br"
-SMTP_PASSWORD = "Mito010894@@"
+SMTP_PASSWORD = "@@Mito010894"
 
 router = APIRouter(prefix="/setEmail", tags=["setEmail"])
 
@@ -33,23 +33,24 @@ async def send_email_endpoint(
     return 'ok'
 
 async def send_email(subject: str, to_email: str, html_content: str, attachments: List[UploadFile] = []):
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = subject
-    msg['From'] = SMTP_USER
-    msg['To'] = to_email
+    # msg = MIMEMultipart('alternative')
+    # msg['Subject'] = subject
+    # msg['From'] = SMTP_USER
+    # msg['To'] = to_email
 
-    # Attach HTML content
-    msg.attach(MIMEText(html_content, 'html'))
+    # # Attach HTML content
+    # msg.attach(MIMEText(html_content, 'html'))
 
-    for attachment in attachments:
-        part = MIMEBase('application', 'octet-stream')
-        part.set_payload(attachment.file.read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f'attachment; filename= {attachment.filename}')
-        msg.attach(part)
+    # for attachment in attachments:
+    #     part = MIMEBase('application', 'octet-stream')
+    #     part.set_payload(attachment.file.read())
+    #     encoders.encode_base64(part)
+    #     part.add_header('Content-Disposition', f'attachment; filename= {attachment.filename}')
+    #     msg.attach(part)
 
-    # Envie o email usando a conexão SMTP persistente
-    smtp_server.sendmail(SMTP_USER, to_email, msg.as_string())
+    # # Envie o email usando a conexão SMTP persistente
+    # smtp_server.sendmail(SMTP_USER, to_email, msg.as_string())
+    return
     
     
 async def sendemail(subject,

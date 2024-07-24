@@ -31,7 +31,11 @@ def cotar(item: CotarItem):
         coletar=item.coletar,
         entDificil=item.entDificil,
         destContribuinte=item.destContribuinte,
-        qtdePares=0
+        qtdePares=0,
+        altura=0,
+        comprimento=0, 
+        largura=0,
+        fatorMultiplicador=0
     )
     
      # Convertendo XML para dicionário

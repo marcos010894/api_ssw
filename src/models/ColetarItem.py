@@ -12,3 +12,22 @@ class ColetarItem(BaseModel):
     observacao: str
     chaveNFe: str
     nroPedido: str
+
+
+
+class ColetarItemSeparate(BaseModel):
+    dominio: str
+    login: str
+    senha: str
+    cnpjRemetente: str
+    cnpjDestinatario: str
+    tipoPagamento: str
+    cepEntrega: str
+    solicitante: str
+    limiteColeta: datetime
+    quantidade: int
+    peso: float
+    numeroNF: str
+    enderecoEntrega: str
+    observacao: str
+    instrucao: str

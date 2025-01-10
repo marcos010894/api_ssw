@@ -31,3 +31,9 @@ class ColetarItemSeparate(BaseModel):
     enderecoEntrega: str
     observacao: str
     instrucao: str
+    cubagem: float
+    valorMerc: float
+    especie: str
+    chaveNF: str
+    cnpjSolicitante: str
+    nroPedido: str

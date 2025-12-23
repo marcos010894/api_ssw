@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 class ColetarItem(BaseModel):
     dominio: str
@@ -37,3 +38,4 @@ class ColetarItemSeparate(BaseModel):
     chaveNF: str
     cnpjSolicitante: str
     nroPedido: str
+    mercadoria: Optional[str] = None

@@ -38,4 +38,10 @@ class ColetarItemSeparate(BaseModel):
     chaveNF: str
     cnpjSolicitante: str
     nroPedido: str
-    mercadoria: Optional[str] = None
+    mercadoria: str
+    cepEndColeta: str
+    logradouroEndColeta: str
+    numeroEndColeta: str
+    complementoEndColeta: str
+    bairroEndColeta: str
+    nomeRemetente: str

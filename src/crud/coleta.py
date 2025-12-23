@@ -54,6 +54,12 @@ def getColetaUnicSeparate(item):
         cnpjSolicitante=item.cnpjSolicitante,
         nroPedido=item.nroPedido,
         mercadoria=item.mercadoria,
+        cepEndColeta=item.cepEndColeta,
+        logradouroEndColeta=item.logradouroEndColeta,
+        numeroEndColeta=item.numeroEndColeta,
+        complementoEndColeta=item.complementoEndColeta,
+        bairroEndColeta=item.bairroEndColeta,
+        nomeRemetente=item.nomeRemetente,
     )
 
     # Convertendo XML para dicionário

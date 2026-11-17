@@ -6,13 +6,28 @@ import json
 
 
 router = APIRouter(prefix="/cotar", tags=["Cotar"])
-client = Client('https://ssw.inf.br/ws/sswCotacaoColeta/index.php?wsdl')
-clientMoTable = Client('https://ssw.inf.br/ws/sswCotacao/index.php?wsdl')
+
+_client = None
+_clientMoTable = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = Client('https://ssw.inf.br/ws/sswCotacaoColeta/index.php?wsdl')
+        _client.service._binding_options['address'] = 'https://ssw.inf.br/ws/sswCotacaoColeta/index.php'
+    return _client
+
+def _get_client_mo_table():
+    global _clientMoTable
+    if _clientMoTable is None:
+        _clientMoTable = Client('https://ssw.inf.br/ws/sswCotacao/index.php?wsdl')
+        _clientMoTable.service._binding_options['address'] = 'https://ssw.inf.br/ws/sswCotacao/index.php'
+    return _clientMoTable
 
 @router.post("/")
 def cotar(item: CotarItem):
     # Chamando a função desejada e passando os parâmetros necessários
-    response = client.service.cotar(
+    response = _get_client().service.cotar(
         dominio=item.dominio,
         login=item.login,
         senha=item.senha,
@@ -52,7 +67,7 @@ def cotar(item: CotarItem):
 @router.post("/no-table")
 def cotar(item: CotarItem):
     # Chamando a função desejada e passando os parâmetros necessários
-    response = client.service.cotar(
+    response = _get_client().service.cotar(
         dominio=item.dominio,
         login=item.login,
         senha=item.senha,

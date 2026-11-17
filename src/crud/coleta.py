@@ -3,11 +3,25 @@ import xmltodict
 import json
 
 
-client = Client('https://ssw.inf.br/ws/sswCotacaoColeta/index.php?wsdl')
-clientSeparate = Client('https://ssw.inf.br/ws/sswColeta/index.php?wsdl')
+_client = None
+_clientSeparate = None
+
+def _get_client():
+    global _client
+    if _client is None:
+        _client = Client('https://ssw.inf.br/ws/sswCotacaoColeta/index.php?wsdl')
+        _client.service._binding_options['address'] = 'https://ssw.inf.br/ws/sswCotacaoColeta/index.php'
+    return _client
+
+def _get_client_separate():
+    global _clientSeparate
+    if _clientSeparate is None:
+        _clientSeparate = Client('https://ssw.inf.br/ws/sswColeta/index.php?wsdl')
+        _clientSeparate.service._binding_options['address'] = 'https://ssw.inf.br/ws/sswColeta/index.php'
+    return _clientSeparate
 
 def getColeta(item):
-    response = client.service.coletar(
+    response = _get_client().service.coletar(
         dominio=item.dominio,
         login=item.login,
         senha=item.senha,
@@ -31,7 +45,7 @@ def getColeta(item):
 
 
 def getColetaUnicSeparate(item):
-    response = clientSeparate.service.coletar(
+    response = _get_client_separate().service.coletar(
         dominio=item.dominio,
         login=item.login,
         senha=item.senha,
